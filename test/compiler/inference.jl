@@ -4141,3 +4141,7 @@ let effects = Base.infer_effects(f_glob_assign_int, ())
     @test !Core.Compiler.is_effect_free(effects)
     @test Core.Compiler.is_nothrow(effects)
 end
+
+@test Base.infer_effects((Int,)) do n
+    for i = 1:n; end
+end |> !Core.Compiler.is_terminates
